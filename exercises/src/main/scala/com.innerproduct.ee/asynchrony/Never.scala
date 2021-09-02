@@ -10,5 +10,5 @@ object Never extends IOApp {
       .as(ExitCode.Success)
 
   val never: IO[Nothing] =
-    IO.async(???) // <1>
+    IO.async({ _ => ()}) // <1>
 }
