@@ -18,11 +18,8 @@ object EarlyRelease extends IOApp {
       conn <- DbConnection.make(config.connectURL)
     } yield conn
 
-  lazy val configResource: Resource[IO, Config] = // <1>
-    for {
-      source <- sourceResource
-      config <- Resource.liftF(Config.fromSource(source)) // <2>
-    } yield config
+  lazy val configResource: Resource[IO, Config] = // <1> what if we try sourceResource.use?
+    Resource.liftF(sourceResource.use(src => Config.fromSource(src)))
 
   lazy val sourceResource: Resource[IO, Source] =
     Resource.make(
