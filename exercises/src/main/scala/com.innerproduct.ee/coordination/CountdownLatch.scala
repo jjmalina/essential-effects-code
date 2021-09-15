@@ -27,7 +27,7 @@ object CountdownLatch {
           case Outstanding(n, whenDone) =>
             Outstanding(n - 1, whenDone) -> IO.unit
           case Done() => Done() -> IO.unit
-        }.flatten
+        }.flatten.uncancelable
     }
 
   sealed trait State
